@@ -1,4 +1,4 @@
-## A medium clone - blog webiste
+## A medium clone - blog website
 - Server based archiutechture
 
 It would have these routes - 
