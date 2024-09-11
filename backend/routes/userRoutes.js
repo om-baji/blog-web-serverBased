@@ -11,12 +11,20 @@ const prisma = new PrismaClient();
 const userRouter = express.Router();
 
 userRouter.get("/delete", async (req, res) => {
-  const deleteUsers = await prisma.user.deleteMany({});
+  try {
+    const deleteUsers = await prisma.user.deleteMany({});
 
-  console.log(deleteUsers);
-  res.json({
-    message: "Deleted succesfully!",
-  });
+    console.log(deleteUsers);
+    res.json({
+      message: "Deleted succesfully!",
+    });
+  }
+  catch (e) {
+    return res.status(500).json({
+      message : "Internal server error!"
+    })
+  }
+  
 });
 
 userRouter.get("/signin", async (req, res) => {
@@ -68,6 +76,7 @@ userRouter.get("/signin", async (req, res) => {
 });
 
 userRouter.post("/signup", async (req, res) => {
+
   const { name, email, password } = req.body;
 
   const signUpBody = z.object({
@@ -88,7 +97,9 @@ userRouter.post("/signup", async (req, res) => {
     });
   }
 
-  const hashedPass = await bcrypt.hash(password,10);
+  try {
+
+    const hashedPass = await bcrypt.hash(password,10);
 
   // console.log(hashedPass);
 
@@ -104,8 +115,13 @@ userRouter.post("/signup", async (req, res) => {
   const token = jwt.sign({ userId: response.id, email: response.email }, JWT_SECRET);
   return res.json({
     message: "User created Succesfully!!",
-    token,
+    token
   });
+  } catch (e) {
+      return res.status(405).json({
+        message : "User already exists or internal server error!"
+      })
+  }
 });
 
 userRouter.post("/blog", userMiddleware, async (req, res) => {
@@ -114,7 +130,7 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
     const { userId } = req.username;
     const { title, text } = req.body;
 
-    console.log("Extracted " + userId)
+    // console.log("Extracted " + userId)
 
     const userName = await prisma.user.findUnique({
       where : {
@@ -122,7 +138,7 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
       }
     })
 
-    console.log(userName)
+    // console.log(userName.name)
 
     const response = await prisma.post.create({
       data: {
@@ -133,7 +149,13 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
       },
     });
 
-    console.log(response);
+    // console.log(response.id);
+
+    console.log({
+      name : userName.name,
+      id : response.id
+    })
+
     return res.json({
       message: "Post created successfully!",
       post: response,
@@ -144,6 +166,7 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
     });
   }
 });
+
 
 module.exports = {
   userRouter,

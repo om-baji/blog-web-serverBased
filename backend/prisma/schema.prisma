@@ -18,6 +18,7 @@ model user {
 
 model post {
   id String @id @default(uuid())
+  Sr_no Int @default(autoincrement())
   title String
   text String
   author String

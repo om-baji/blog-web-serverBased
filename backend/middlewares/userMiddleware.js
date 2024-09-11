@@ -11,6 +11,10 @@ const userMiddleware = async (req,res,next) => {
 
     // console.log(req.headers["authorization"].split(" ")[1]);
 
+    const isValid = sentToken.split(" ")[0] === "Bearer";
+
+    if (!isValid) return res.status(400).json({ message : "Invalid token"})
+
     const token = sentToken.split(' ')[1];
 
     try {
