@@ -55,7 +55,7 @@ userRouter.get("/signin", async (req, res) => {
   
     if (!isValid) return res.json({ message : "Incorrect password!"})
   
-    console.log(response);
+    // console.log(response);
   
     const token = jwt.sign({ userId: response.id, email: response.email }, JWT_SECRET);
     return res.json({
@@ -114,18 +114,16 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.post("/blog", userMiddleware, async (req, res) => {
   try {
 
-    const userid = req.username;
-
-    console.log(userid)
+    const { userId } = req.username;
     const { title, text } = req.body;
 
-    console.log(email)
+    console.log("Extracted " + userId)
 
     const response = await prisma.post.create({
       data: {
         title,
         text,
-        author: userid 
+        authorId: userId 
       },
     });
 

@@ -16,7 +16,7 @@ const userMiddleware = async (req,res,next) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
 
-    console.log(decoded)
+    // console.log("Decoded" + decoded)
 
     if (!decoded) {
         return res.status(403).json({
@@ -24,7 +24,7 @@ const userMiddleware = async (req,res,next) => {
         })
     }
 
-    req.username = decoded.userId;
+    req.username = decoded;
 
     next();
     } catch (e) {
