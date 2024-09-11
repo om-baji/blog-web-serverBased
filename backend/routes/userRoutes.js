@@ -3,15 +3,12 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const z = require("zod");
 const { PrismaClient } = require("@prisma/client");
-const { blogRouter } = require("./blogRoutes");
 const userMiddleware = require("../middlewares/userMiddleware");
 const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 
 const userRouter = express.Router();
-
-userRouter.use("/user", blogRouter);
 
 userRouter.get("/delete", async (req, res) => {
   const deleteUsers = await prisma.user.deleteMany({});
