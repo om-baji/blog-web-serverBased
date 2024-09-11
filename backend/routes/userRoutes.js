@@ -204,6 +204,21 @@ userRouter.get("/blog/:blogId" , userMiddleware, async (req,res)=> {
     }
 })
 
+userRouter.get("/blogs", userMiddleware, async (req,res)=> {
+
+    try {
+      const blogs = await prisma.post.findMany({})
+
+      res.status(200).json({
+        blogs
+      })
+    } catch (e) {
+      res.status(500).json({
+        message : "Internal server error!"
+      })
+    }
+})
+
 module.exports = {
   userRouter,
 };
