@@ -167,6 +167,42 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
   }
 });
 
+userRouter.get("/blog/:blogId" , userMiddleware, async (req,res)=> {
+    
+    try {
+      const { blogId } = req.params;
+      // console.log(blogId)
+      const {userId} = req.username;
+
+      // console.log(userId)
+      
+      const userName = await prisma.user.findFirst({
+        where : {
+          id : userId
+        }
+      })
+
+      if (!userName) return res.status(405).json({ message : "Not Found"})
+
+      const blog = await prisma.post.findFirst({
+          where  : {
+            Sr_no : parseInt(blogId)
+          }
+      })
+
+      // console.log(blog)
+
+      return res.status(200).json({
+        blog
+      })
+      
+    } catch (e) {
+      return res.status(500).json({
+        message : "Internal server error!",
+        error : e.message
+      })
+    }
+})
 
 module.exports = {
   userRouter,
