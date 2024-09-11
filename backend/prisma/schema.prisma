@@ -20,6 +20,7 @@ model post {
   id String @id @default(uuid())
   title String
   text String
+  author String
   authorId String
   User user @relation(fields: [authorId], references: [id])
 }

@@ -119,10 +119,19 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
 
     console.log("Extracted " + userId)
 
+    const userName = await prisma.user.findUnique({
+      where : {
+        id : userId
+      }
+    })
+
+    console.log(userName)
+
     const response = await prisma.post.create({
       data: {
         title,
         text,
+        author : userName.name,
         authorId: userId 
       },
     });
