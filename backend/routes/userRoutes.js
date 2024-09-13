@@ -219,35 +219,43 @@ userRouter.get("/blogs", userMiddleware, async (req,res)=> {
     }
 })
 
-userRouter.put("/blog/:blogId" , userMiddleware, async (req,res)=> {
+userRouter.put("/blog/:blogId",  userMiddleware, async (req,res)=> {
 
     try {
       const { blogId } = req.params;
 
       const { title , text} = req.body;
-  
-      const blog = await prisma.post.findFirst({
+
+      const blog = await prisma.post.findFirstOrThrow({
         where : {
-          Sr_no : blogId
+          Sr_no : parseInt(blogId)
         },
-        data : {
-          title,
-          text
-        }
       })
+
       console.log(blog)
+
+      const updatedBlog = await prisma.post.update({
+          where : {
+            id : blog.id
+          },
+          data : {
+            title,
+            text,
+          }
+      })
+
+      console.log(updatedBlog)
+
       return res.json({
         message : "Updated",
-        blog
+        updatedBlog
       })
     } catch (e) {
       return res.status(500).json({
         message : "Internal server error!",
         error : e
       })
-    }
-  
-    
+    }   
 })
 
 module.exports = {
