@@ -1,9 +1,9 @@
-import Heading from "../components/Heading"
+import HomeHeading from "../components/HomeHeading"
 
 const HomePage = () => {
   return (
     <div>
-        <Heading text={"Medium is an American online publishing platform developed by Evan Williams and launched in August 2012. It is owned by A Medium Corporation."}/>
+        <HomeHeading text={"Medium is an American online publishing platform developed by Evan Williams and launched in August 2012. It is owned by A Medium Corporation."}/>
     </div>
   )
 }

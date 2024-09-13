@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import ErrorPage from './pages/ErrorPage';
+import RegiterPage from './pages/RegisterPage';
 
 const router = createBrowserRouter([{
     path : "/",
@@ -14,6 +15,11 @@ const router = createBrowserRouter([{
   {
     path : "/login",
     element : <LoginPage />,
+    errorElement : <ErrorPage />
+  },
+  {
+    path : "/register",
+    element : <RegiterPage />,
     errorElement : <ErrorPage />
   }
 ])

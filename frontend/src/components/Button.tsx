@@ -1,12 +1,13 @@
 interface buttonInput {
     label : string;
+    className? : string;
     onClick : () => void
 }
-export default function Button({label,onClick} : buttonInput){
+export default function Button({label,onClick,className} : buttonInput){
     return (
         <button
         onClick={onClick}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className={`px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-500 ${className}`}
       >
         {label}
       </button>
