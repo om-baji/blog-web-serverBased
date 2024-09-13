@@ -1,0 +1,15 @@
+/* Button.css */
+.button {
+    padding: 8px 16px; /* Equivalent to px-4 py-2 in Tailwind */
+    background-color: #3b82f6; /* bg-blue-500 in Tailwind */
+    color: #ffffff; /* text-white in Tailwind */
+    border: none;
+    border-radius: 8px; /* rounded in Tailwind */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  .button:hover {
+    background-color: #2563eb; /* hover:bg-blue-600 in Tailwind */
+  }
+  
