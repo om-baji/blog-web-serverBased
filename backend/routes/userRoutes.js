@@ -27,7 +27,7 @@ userRouter.get("/delete", async (req, res) => {
   
 });
 
-userRouter.get("/signin", async (req, res) => {
+userRouter.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   const signUpBody = z.object({
@@ -232,7 +232,7 @@ userRouter.put("/blog/:blogId",  userMiddleware, async (req,res)=> {
         },
       })
 
-      console.log(blog)
+      // console.log(blog)
 
       const updatedBlog = await prisma.post.update({
           where : {
@@ -244,7 +244,7 @@ userRouter.put("/blog/:blogId",  userMiddleware, async (req,res)=> {
           }
       })
 
-      console.log(updatedBlog)
+      // console.log(updatedBlog)
 
       return res.json({
         message : "Updated",

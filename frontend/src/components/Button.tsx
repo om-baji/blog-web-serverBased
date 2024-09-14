@@ -1,6 +1,7 @@
 interface buttonInput {
     label : string;
     className? : string;
+    onChange? : () => void;
     onClick : () => void
 }
 export default function Button({label,onClick,className} : buttonInput){

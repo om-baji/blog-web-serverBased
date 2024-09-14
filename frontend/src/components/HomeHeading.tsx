@@ -5,8 +5,12 @@
 
         const navigate = useNavigate();
 
-        const handleClick = () => {
+        const handleClick1 = () => {
             navigate("/login")
+        }
+
+        const handleClick2 = () => {
+            navigate("/register")
         }
 
         return (
@@ -25,8 +29,8 @@
                 </div>
                 <div className="p-4">
                     <div className="flex flex-col gap-4">
-                    <Button label={"Login"} onClick={handleClick} />
-                    <Button label={"Regiter"} onClick={handleClick} />
+                    <Button label={"Login"} onClick={handleClick1} />
+                    <Button label={"Regiter"} onClick={handleClick2} />
                     </div>
                    
                 </div>
