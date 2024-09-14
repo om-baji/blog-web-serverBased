@@ -22,14 +22,10 @@ export default function LoginPage() {
                 email : username,
                 password : pass
             })
+        
+            const token = response.data.token
 
-            // console.log({
-            //     response,
-            //     data : response.data.message,
-            //     token : response.data.token
-            // })
-            
-            navigate(`/blogPage/id=${response.data.token}`)
+            navigate(`/blogPage/${encodeURIComponent(token)}`)
         } catch (e) {
             navigate("/error")
         }

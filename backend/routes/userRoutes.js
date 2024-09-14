@@ -204,7 +204,7 @@ userRouter.get("/blog/:blogId" , userMiddleware, async (req,res)=> {
     }
 })
 
-userRouter.get("/blogs", userMiddleware, async (req,res)=> {
+userRouter.post("/blogs", userMiddleware, async (req,res)=> {
 
     try {
       const blogs = await prisma.post.findMany({})
