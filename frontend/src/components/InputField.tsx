@@ -1,7 +1,7 @@
 interface inputs {
     placeholder: string;
     type? : string;
-    onChange : (e : any)=> void;
+    onChange? : (e : any)=> void;
 
 
 }
