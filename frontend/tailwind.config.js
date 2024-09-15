@@ -5,6 +5,9 @@ export default {
     "./public/index.html",
   ],
   theme: {
+    fontFamily : {
+      spaceGrotesk : ["static/SpaceGrotesk-Bold.ttf","SpaceGrotesk-SemiBold", "SpaceGrotesk-Bold", "san-serif"]
+    },
     extend: {},
   },
   plugins: [],

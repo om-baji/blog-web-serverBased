@@ -34,10 +34,13 @@ export default function LoginPage() {
     }   
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen gap-2">
-            <Heading />
-            <InputField placeholder={"Username"} onChange={(e) => setUser(e.target.value)}/>
-            <InputField placeholder={"Password"} type={"password"} onChange={(e) => setPass(e.target.value)}/>
+        <div className="flex flex-col justify-center items-center h-screen gap-2 bg-slate-100">
+            <Heading text={"Welcome Back,"}/>
+            <div className="w-[40%]">
+                <InputField placeholder={"example@abc.com"} label={"Email"} onChange={(e) => setUser(e.target.value)}/>
+                <InputField placeholder={"Password"} type={"password"} label={"Password"} onChange={(e) => setPass(e.target.value)}/>
+            </div>
+            
             
             <div className="flex flex-col gap-4">
             <div>

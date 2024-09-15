@@ -1,14 +1,15 @@
 interface inputs {
     placeholder: string;
+    label? :string;
     type? : string;
     onChange? : (e : any)=> void;
 
 
 }
-export default function InputField({ placeholder,type = "text", onChange }: inputs) {
+export default function InputField({ placeholder,type = "text", onChange,label }: inputs) {
     return (
         <div className="mb-6">
-            <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900">{placeholder}</label>
+            <label htmlFor="default-input" className="block mb-2 text-sm font-medium text-gray-900">{label}</label>
             <input 
             type={type}
             id="default-input" 
