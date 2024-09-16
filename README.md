@@ -14,6 +14,10 @@ It would have these routes -
 #### Sign In
   ![bg-med2](https://github.com/user-attachments/assets/98db8bba-0b0d-425e-9fdd-bcb8861a43fe)
 
-#### Sign Up
+#### Sign up
+![bg-med4](https://github.com/user-attachments/assets/33772cdb-6c40-4f7d-a8ba-7feca9ac49e8)
+
+#### Blogs page
   ![bg-med3](https://github.com/user-attachments/assets/dc95df96-46eb-4e5a-8295-9499d69dba97)
+
   
