@@ -35,28 +35,28 @@ export default function LoginPage() {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-slate-100">
-        <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
-            <div className="text-center mb-6">
-                <Heading text="Welcome Back," />
-            </div>
-            <div className="space-y-4">
-                <InputField placeholder="example@abc.com" label="Email" onChange={(e) => setUser(e.target.value)} />
-                <InputField placeholder="Password" type="password" label="Password" onChange={(e) => setPass(e.target.value)} />
-            </div>
-    
-            <div className="mt-6 space-y-4">
-                <Button label="Login" className="w-full" onClick={click} />
-    
-                <div className="text-center text-sm text-gray-500">
-                    New to Medium?
-                    <Link className="text-blue-500 ml-1" to="/register">
-                        <u>Register</u>
-                    </Link>
+            <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+                <div className="text-center mb-6">
+                    <Heading text="Welcome Back," />
+                </div>
+                <div className="space-y-4">
+                    <InputField placeholder="example@abc.com" label="Email" onChange={(e) => setUser(e.target.value)} />
+                    <InputField placeholder="Password" type="password" label="Password" onChange={(e) => setPass(e.target.value)} />
+                </div>
+
+                <div className="mt-6 space-y-4">
+                    <Button label="Login" className="w-full" onClick={click} />
+
+                    <div className="text-center text-sm text-gray-500">
+                        New to Medium?
+                        <Link className="text-blue-500 ml-1" to="/register">
+                            <u>Register</u>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
+
 
     )
 }

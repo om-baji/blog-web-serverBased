@@ -24,9 +24,16 @@ const BlogPage = () => {
     
     const token = `Bearer ${params.token}`;
 
-    const [combined, setCombined] = useState<{ title: string; text: string }[]>([]);
+    const [combined, setCombined] = useState<{
+        modified: string;
+        author: string; title: string; text: string 
+}[]>([])
+    const [filtered, setfiltered] = useState<{ title: string; text: string }[]>([])
 
-    console.log(token)
+    const [search,setSearch] = useState<string>("")
+
+
+    // console.log(token)
 
     useEffect( () => {
 
@@ -44,22 +51,46 @@ const BlogPage = () => {
             const combinedData = arr.map((blog: blogObject) => ({
                 title: blog.title,
                 text: blog.text,
+                author : blog.author,
+                updatedAt : blog.updatedAt,
             }));            
-           
+            
+            
+
             setCombined(combinedData)
+
+            // console.log(combined[0].modified)
         }
         fetchData();
     }, [token])
 
+    useEffect( () => {
+        const filteredBlogs = combined.filter(blog =>
+            blog.title.toLowerCase().includes(search.toLowerCase()) ||
+            blog.text.toLowerCase().includes(search.toLowerCase())
+        );
+
+        console.log(filteredBlogs)
+        
+        setfiltered(filteredBlogs)
+    
+    },[search])
+
+    
     return (
         
         <div className='w-full'>
+            {/* <SearchBar onChange={(e : any) => setSearch(e.target.value)}/> */}
             <SearchBar />
             <div className='flex flex-col justify-center items-center w-full'>
             {
                 combined.map((item,index) => {
                     return <div className='m-2'>
-                        <Card key={index} title={item.title} description={item.text}/>
+                        <Card key={index} 
+                        title={item.title} 
+                        description={item.text}
+                        author={item.author}
+                        modified={item.modified}/>
                     </div>
                 })
             }

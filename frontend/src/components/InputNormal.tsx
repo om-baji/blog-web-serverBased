@@ -1,8 +1,7 @@
 interface inputProps {
     placeholder: string;
     label?: string;
-
-
+    onChange? : () => void;
 }
 
 export default function InputNormal() {
@@ -23,7 +22,6 @@ export default function InputNormal() {
                         id="search"
                         className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-xl bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Search"
-                        required
                     />
                     <button
                         type="submit"
