@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import ErrorPage from './pages/ErrorPage';
 import RegiterPage from './pages/RegisterPage';
 import BlogPage from './pages/BlogPage';
+import BlogExpand from './pages/BlogExpand';
 
 
 const router = createBrowserRouter([{
@@ -28,7 +29,11 @@ const router = createBrowserRouter([{
     path : "/blogPage/:token",
     element : <BlogPage />,
     errorElement : <ErrorPage />
-
+  },
+  {
+    path : "/blog/:id",
+    element : <BlogExpand />,
+    errorElement : <ErrorPage />
   }
 ])
 
