@@ -34,8 +34,8 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-slate-100">
-            <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+        <div className="flex justify-center items-center min-h-screen bg-cover bg-center" style={{ backgroundImage: `url('https://i.redd.it/sk6aqjh1ro371.png')` }}>
+            <div className="w-full max-w-lg p-8 bg-white bg-opacity-70 rounded-lg shadow-lg backdrop-blur-md">
                 <div className="text-center mb-6">
                     <Heading text="Welcome Back," />
                 </div>
