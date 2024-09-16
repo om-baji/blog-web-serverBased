@@ -24,8 +24,6 @@ const BlogPage = () => {
     
     const token = `Bearer ${params.token}`;
 
-    const [titles,setTitles] = useState([])
-    const [texts,setTexts] = useState([])
     const [combined, setCombined] = useState<{ title: string; text: string }[]>([]);
 
     console.log(token)
@@ -54,20 +52,19 @@ const BlogPage = () => {
     }, [token])
 
     return (
-        // <div className="flex text-2xl justify-center items-center h-screen gap-4">
-            
-        //         Landed on blog page!
-           
-        // </div>
-        <div className=''>
+        
+        <div className='w-full'>
             <SearchBar />
-            {/* {
+            <div className='flex flex-col justify-center items-center w-full'>
+            {
                 combined.map((item,index) => {
-                    return <>
+                    return <div className='m-2'>
                         <Card key={index} title={item.title} description={item.text}/>
-                    </>
+                    </div>
                 })
-            } */}
+            }
+            </div>
+            
         </div>
     )
 }
