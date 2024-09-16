@@ -14,43 +14,49 @@ export default function RegiterPage() {
     const navigate = useNavigate()
 
     const regs = async () => {
-        const response = await axios.post("http://localhost:3000/api/v1/u/signup", {
-            name,
-            email,
-            password: pass
-        })
-
-        const data = response.data
-
-        const token = data.token
-
-        navigate(`/blogPage/${token}`)
-
+        try {
+            const response = await axios.post("http://localhost:3000/api/v1/u/signup", {
+                name,
+                email,
+                password: pass
+            })
+    
+            const data = response.data
+    
+            const token = data.token
+    
+            navigate(`/blogPage/${token}`)
+        } catch (e) {
+            
+        }
+        
     }
 
     return (
-        <div>
-            <div className="flex flex-col justify-center items-center h-screen gap-1 bg-slate-100">
-                <Heading text={"Create an account"}/>
-                <div className="w-[40%]">
-                    <InputField placeholder={"Name"} label={"Enter your name"} onChange={(e) => setName(e.target.value)} />
-                    <InputField placeholder={"email"} label={"Enter your email"} onChange={(e) => setEmail(e.target.value)} />
-                    <InputField placeholder={"Create a password"} label={"Create a password"} type={"password"} onChange={(e) => setPass(e.target.value)} />
-                    <InputField placeholder={"re-enter password"} label={"Re-enter"} type={"password"} />
+        <div className="flex justify-center items-center min-h-screen bg-slate-100">
+            <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-lg">
+                <div className="text-center mb-6">
+                    <Heading text="Create an account" />
+                </div>
+                <div className="space-y-4">
+                    <InputField placeholder="Name" label="Enter your name" onChange={(e) => setName(e.target.value)} />
+                    <InputField placeholder="Email" label="Enter your email" onChange={(e) => setEmail(e.target.value)} />
+                    <InputField placeholder="Create a password" label="Create a password" type="password" onChange={(e) => setPass(e.target.value)} />
+                    <InputField placeholder="Re-enter password" label="Re-enter" type="password" />
                 </div>
 
+                <div className="mt-6 space-y-4">
+                    <Button label="Sign Up" className="w-full" onClick={regs} />
 
-                <div className="flex flex-col gap-4">
-                    <div>
-                        <div className="flex gap-2">
-                            Already have an account?
-                            <Link className="text-blue-400" to={"/login"}><u>Login</u></Link>
-                        </div>
+                    <div className="text-center text-sm text-gray-500">
+                        Already have an account?
+                        <Link className="text-blue-500 ml-1" to="/login">
+                            <u>Login</u>
+                        </Link>
                     </div>
-                    <Button label={"Sign Up"} className="w-50" onClick={regs} />
                 </div>
-
             </div>
         </div>
+
     )
 }
