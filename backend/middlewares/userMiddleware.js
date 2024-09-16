@@ -12,7 +12,7 @@ const userMiddleware = async (req,res,next) => {
         
     const sentToken = req.headers["authorization"];
 
-    console.log(sentToken)
+    // console.log(sentToken)
     
 
     // console.log(req.headers["authorization"].split(" ")[1]);
