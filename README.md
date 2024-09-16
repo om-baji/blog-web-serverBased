@@ -20,4 +20,25 @@ It would have these routes -
 #### Blogs page
   ![bg-med3](https://github.com/user-attachments/assets/dc95df96-46eb-4e5a-8295-9499d69dba97)
 
-  
+#### To run this locally
+
+- Get a prisma Database instance from Neon,Supabase,etc.
+- Create an .env file and store the connection string there.
+- you can either start the server for forever (by using pm2,forever) or start locally
+
+``` bash
+
+npm install
+cd backend/
+pm2 start index.js
+
+```
+
+```bash
+cd frontend/
+npm run dev
+```
+
+#### Doker file will be released after the completion of the project!
+
+
