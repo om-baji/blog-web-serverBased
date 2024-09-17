@@ -8,6 +8,7 @@ import ErrorPage from './pages/ErrorPage';
 import RegiterPage from './pages/RegisterPage';
 import BlogPage from './pages/BlogPage';
 import BlogExpand from './pages/BlogExpand';
+import BlogWrite from './pages/BlogWrite';
 
 
 const router = createBrowserRouter([{
@@ -34,7 +35,13 @@ const router = createBrowserRouter([{
     path : "/blog/:id",
     element : <BlogExpand />,
     errorElement : <ErrorPage />
+  },
+  {
+    path : "/create",
+    element : <BlogWrite />,
+    errorElement : <ErrorPage />
   }
+  
 ])
 
 createRoot(document.getElementById('root')!).render(
