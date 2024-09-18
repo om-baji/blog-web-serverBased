@@ -37,7 +37,7 @@ const router = createBrowserRouter([{
     errorElement : <ErrorPage />
   },
   {
-    path : "/create",
+    path : "/create/:id",
     element : <BlogWrite />,
     errorElement : <ErrorPage />
   }

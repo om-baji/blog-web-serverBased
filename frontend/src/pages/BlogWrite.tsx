@@ -2,18 +2,27 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import InputField from "../components/InputField";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function BlogWrite() {
 
-    const postBlog = async (title : string,description : string) => {
-        const response = await axios.post("http://localhost:3000/api/v1/u/blog", {
-            
-        })
+    const params = useParams()
+
+    console.log(params)
+
+
+    const postBlog = async () => {
+        // const response = await axios.post("http://localhost:3000/api/v1/u/blog", {
+        //     title,
+        //     description
+        // })
+
+        // console.log(response)
     }
 
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
+    const [title, setTitle] = useState<string>("")
+    const [description, setDescription] = useState<string>("")
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-cover bg-center" style={{ backgroundImage: `url('https://i.redd.it/sk6aqjh1ro371.png')` }}>
@@ -28,7 +37,7 @@ export default function BlogWrite() {
                 </div>
 
                 <div className="mt-6 space-y-4">
-                    <Button label="Post Blog" className="w-full" onClick={() => console.log()} />
+                    <Button label="Post Blog" className="w-full" onClick={postBlog} />
                 </div>
             </div>
         </div>

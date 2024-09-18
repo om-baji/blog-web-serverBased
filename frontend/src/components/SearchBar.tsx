@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import InputNormal from "./InputNormal";
 
 interface props {
-    onChange? : () => void
+    onChange? : (e : any) => void
 } 
 
 export default function SearchBar({onChange} : props) {
@@ -14,7 +14,7 @@ export default function SearchBar({onChange} : props) {
             </div>
             <div className="flex-grow w-[70%] flex items-center">
                 <div className="w-full">
-                    <InputNormal />
+                    <InputNormal onChange={onChange} placeholder=""/>
 
                 </div>
 
