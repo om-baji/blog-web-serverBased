@@ -31,8 +31,7 @@ const BlogPage = () => {
         title: string;
         text: string
     }[]>([])
-    const [filtered, setfiltered] = useState<{ title: string; text: string }[]>([])
-
+    
     const [search, setSearch] = useState<string>("")
 
 
