@@ -27,7 +27,7 @@ const router = createBrowserRouter([{
     errorElement : <ErrorPage />
   },
   {
-    path : "/blogPage/:token",
+    path : "/blogPage",
     element : <BlogPage />,
     errorElement : <ErrorPage />
   },

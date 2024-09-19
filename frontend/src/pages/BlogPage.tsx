@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Card from '../components/Card';
 import SearchBar from '../components/SearchBar';
@@ -21,9 +21,10 @@ interface blogObject {
 
 const BlogPage = () => {
 
-    const params = useParams();
-
-    const token = `Bearer ${params.token}`;
+    const location = useLocation()
+    const query = new URLSearchParams(location.search)
+    const token = query.get('token')
+    const authHeader = `Bearer ${token}`
 
     const [combined, setCombined] = useState<{
         modified: string;
@@ -44,7 +45,7 @@ const BlogPage = () => {
             try {
                 const response = await axios.post("http://localhost:3000/api/v1/u/blogs", null, {
                     headers: {
-                        Authorization: token
+                        Authorization: authHeader
                     }
                 })
                 const data = response.data
@@ -66,18 +67,6 @@ const BlogPage = () => {
         }
         fetchData();
     }, [token])
-
-    // useEffect(() => {
-    //     const filteredBlogs = combined.filter(blog =>
-    //         blog.title.toLowerCase().includes(search.toLowerCase()) ||
-    //         blog.text.toLowerCase().includes(search.toLowerCase())
-    //     );
-
-    //     console.log(filteredBlogs)
-
-    //     setfiltered(filteredBlogs)
-
-    // }, [search])
 
 
     return (

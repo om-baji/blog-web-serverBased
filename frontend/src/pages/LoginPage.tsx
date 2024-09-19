@@ -25,7 +25,7 @@ export default function LoginPage() {
 
             const token = response.data.token
 
-            navigate(`/blogPage/${encodeURIComponent(token)}`)
+            navigate(`/blogPage?token=${token}`)
         } catch (e) {
             navigate("/error")
         }
