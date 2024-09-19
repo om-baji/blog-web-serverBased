@@ -1,33 +1,45 @@
-import Button from "../components/Button";
 import Heading from "../components/Heading";
-import InputField from "../components/InputField";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import FormInput from "../components/FormInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+})
+
+type InputFields = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
 
-    const navigate = useNavigate();
-    const [username, setUser] = useState("");
-    const [pass, setPass] = useState("");
+    const form = useForm<InputFields>({
+        resolver: zodResolver(loginSchema)
+    })
+    const { register, handleSubmit, formState: { isSubmitting, errors, isSubmitSuccessful } } = form
 
-    const click = async () => {
-        console.log({
-            username,
-            pass
-        })
+    const navigate = useNavigate();
+
+    const onSubmit = async ({ email, password }: InputFields) => {
+        // console.log(email, password)
 
         try {
             const response = await axios.post("http://localhost:3000/api/v1/u/signin", {
-                email: username,
-                password: pass
+                email,
+                password
             })
 
-            const token = response.data.token
+            const { token } = response.data
 
             navigate(`/blogPage?token=${token}`)
+
+
         } catch (e) {
+            console.log(e)
             navigate("/error")
+
         }
 
 
@@ -40,22 +52,58 @@ export default function LoginPage() {
                     <Heading text="Welcome Back," />
                 </div>
                 <div className="space-y-4">
-                    <InputField placeholder="example@abc.com" label="Email" onChange={(e) => setUser(e.target.value)} />
-                    <InputField placeholder="Password" type="password" label="Password" onChange={(e) => setPass(e.target.value)} />
+
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <FormInput
+                            placeholder={"example@xyz.com"}
+                            type={"text"}
+                            label={"Email"}
+                            name={"email"}
+                            register={register} />
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mb-2 font-semibold">
+                                {errors.email.message}
+                            </p>
+                        )}
+                        <FormInput
+                            placeholder={"password"}
+                            type={"password"}
+                            label={"Password"}
+                            name={"password"}
+                            register={register} />
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mb-2 font-semibold">
+                                {errors.password.message}
+                            </p>
+                        )}
+
+                        <div className="mt-6 space-y-4">
+                            <button disabled={isSubmitting} type="submit" className="w-full px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-500">
+                                {isSubmitting ? "Loading..." : "Login"}
+                            </button>
+                            {!isSubmitSuccessful && (
+                                <p className="text-red-500 text-sm mb-2 font-semibold">
+                                    {errors.root?.message}
+                                </p>
+                            )}
+
+
+                            <div className="text-center text-sm text-gray-500">
+                                New to Medium?
+                                <Link className="text-blue-500 ml-1" to="/register">
+                                    <u>Register</u>
+                                </Link>
+                            </div>
+                        </div>
+
+                    </form>
+
                 </div>
 
-                <div className="mt-6 space-y-4">
-                    <Button label="Login" className="w-full" onClick={click} />
 
-                    <div className="text-center text-sm text-gray-500">
-                        New to Medium?
-                        <Link className="text-blue-500 ml-1" to="/register">
-                            <u>Register</u>
-                        </Link>
-                    </div>
-                </div>
             </div>
         </div>
+
 
 
     )

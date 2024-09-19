@@ -13,8 +13,6 @@ interface cardProps {
 
 export default function Card({ title, description, author, modified, to = "/error", onClick }: cardProps) {
 
-    const navigate = useNavigate()
-
     return (
         <div onClick={() => {
             <Link to={"/blog/1"} />
@@ -33,9 +31,6 @@ export default function Card({ title, description, author, modified, to = "/erro
                 <p className='pt-2'>
                     <b>Created by - </b> <i>{author}</i>
                 </p>
-                {/* <p>
-                <b>Modified on - </b>{modified}
-            </p> */}
             </Link>
         </div>
 

@@ -30,7 +30,8 @@ const BlogPage = () => {
         modified: string;
         author: string;
         title: string;
-        text: string
+        text: string;
+        Sr_no : number
     }[]>([])
     
     const [search, setSearch] = useState<string>("")
@@ -57,6 +58,7 @@ const BlogPage = () => {
                     text: blog.text,
                     author: blog.author,
                     updatedAt: blog.updatedAt,
+                    Sr_no : blog.Sr_no
                 }));
 
                 setCombined(combinedData)
