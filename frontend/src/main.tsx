@@ -32,7 +32,7 @@ const router = createBrowserRouter([{
     errorElement : <ErrorPage />
   },
   {
-    path : "/blog/:id",
+    path : "/blog",
     element : <BlogExpand />,
     errorElement : <ErrorPage />
   },

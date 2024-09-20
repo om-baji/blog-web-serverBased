@@ -18,13 +18,13 @@ type registerProps = z.infer<typeof registerSchema>
 export default function RegiterPage() {
 
     const form = useForm<registerProps>({
-        resolver : zodResolver(registerSchema)
+        resolver: zodResolver(registerSchema)
     })
-    const { register, handleSubmit, formState: { errors, isSubmitSuccessful, isSubmitting } } = form
+    const { register, handleSubmit,setError, formState: { errors, isSubmitSuccessful, isSubmitting } } = form
 
     const navigate = useNavigate()
 
-    const onRegister = async ({name,email,password}: registerProps) => {
+    const onRegister = async ({ name, email, password }: registerProps) => {
         try {
             const response = await axios.post("http://localhost:3000/api/v1/u/signup", {
                 name,
@@ -32,11 +32,10 @@ export default function RegiterPage() {
                 password
             })
             const { token } = response.data
-            navigate(`/blogPage?token=${token}`)
-        
-        } catch (e) {
+            { token && navigate(`/blogPage?token=${token}`) }
+        } catch (e : any) {
             console.log(e)
-            navigate("/error")
+            setError("root", { message : e.response?.data?.message || "Something went wrong!"})
         }
     }
 
@@ -73,7 +72,7 @@ export default function RegiterPage() {
                             </p>
                         )}
                         <FormInput
-                            placeholder={"password"}
+                            placeholder={"someone@123"}
                             type={"password"}
                             label={"Password"}
                             name={"password"}
@@ -83,6 +82,7 @@ export default function RegiterPage() {
                                 {errors.password.message}
                             </p>
                         )}
+
                         <div className="mt-6 space-y-4">
                             <button disabled={isSubmitting} type="submit" className="w-full px-4 py-2 bg-slate-700 text-white rounded hover:bg-slate-500">
                                 {isSubmitting ? "Loading..." : "Register"}
@@ -108,3 +108,4 @@ export default function RegiterPage() {
 
     )
 }
+

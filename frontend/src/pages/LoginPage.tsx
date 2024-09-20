@@ -18,12 +18,11 @@ export default function LoginPage() {
     const form = useForm<InputFields>({
         resolver: zodResolver(loginSchema)
     })
-    const { register, handleSubmit, formState: { isSubmitting, errors, isSubmitSuccessful } } = form
+    const { register, handleSubmit, setError ,formState: { isSubmitting, errors, isSubmitSuccessful } } = form
 
     const navigate = useNavigate();
 
     const onSubmit = async ({ email, password }: InputFields) => {
-        // console.log(email, password)
 
         try {
             const response = await axios.post("http://localhost:3000/api/v1/u/signin", {
@@ -33,13 +32,12 @@ export default function LoginPage() {
 
             const { token } = response.data
 
-            navigate(`/blogPage?token=${token}`)
+            {token && navigate(`/blogPage?token=${token}`)}
 
 
-        } catch (e) {
+        } catch (e : any) {
             console.log(e)
-            navigate("/error")
-
+            setError("root", { message : e.response?.data?.message || "Something went wrong!"})
         }
 
 

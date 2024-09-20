@@ -11,12 +11,10 @@ interface cardProps {
 
 
 
-export default function Card({ title, description, author, modified, to = "/error", onClick }: cardProps) {
+export default function Card({ title, description, author, modified, to = "/blog", onClick }: cardProps) {
 
     return (
-        <div onClick={() => {
-            <Link to={"/blog/1"} />
-        }}>
+        <div>
             <Link to={to}
                 className="block w-full p-6 
         bg-white border border-gray-200 
