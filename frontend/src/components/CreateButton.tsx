@@ -1,12 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useLocation,useNavigate } from "react-router-dom"
 
 
 
 export default function CreateButton() {
 
     const navigate = useNavigate()
-    const params = useParams()
-    const token = params.token
+
+    const location = useLocation()
+    const query = new URLSearchParams(location.search)
+    const token = query.get("token")
+
 
     return (
         <div className="flex fixed h-screen">

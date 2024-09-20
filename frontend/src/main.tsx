@@ -9,6 +9,7 @@ import RegiterPage from './pages/RegisterPage';
 import BlogPage from './pages/BlogPage';
 import BlogExpand from './pages/BlogExpand';
 import BlogWrite from './pages/BlogWrite';
+import Profile from './pages/Profile';
 
 
 const router = createBrowserRouter([{
@@ -39,6 +40,11 @@ const router = createBrowserRouter([{
   {
     path : "/create",
     element : <BlogWrite />,
+    errorElement : <ErrorPage />
+  }, 
+  {
+    path : "/profile",
+    element : <Profile />,
     errorElement : <ErrorPage />
   }
   

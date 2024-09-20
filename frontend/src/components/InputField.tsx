@@ -4,9 +4,8 @@ interface inputs {
     type?: string;
     onChange?: (e: any) => void;
     size?: "title" | "description";
-
-
 }
+
 export default function InputField({ placeholder, type = "text", onChange, label, size = "title" }: inputs) {
 
     const sizeClasses = {

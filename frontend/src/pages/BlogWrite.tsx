@@ -19,6 +19,8 @@ export default function BlogWrite() {
   const token = queryParams.get('token')
   const authHeader = `Bearer ${token}`
 
+  console.log(queryParams)
+
   const form = useForm<BlogInput>({
     resolver: zodResolver(schema)
   })
