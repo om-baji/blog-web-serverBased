@@ -38,11 +38,13 @@ const userMiddleware = async (req,res,next) => {
 
     next();
     } catch (e) {
-        console.log(sentToken)
+        // console.log(sentToken)
+        const sentToken = req.headers["authorization"]
         return res.status(500).json({
             // x : console.log(req.headers["authorization"].split(" ")[1]),
             messsage : `Internal server error\n ${e}`,
-            sentToken
+            token : sentToken
+            
         })
     }
     

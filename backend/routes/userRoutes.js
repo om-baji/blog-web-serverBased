@@ -18,13 +18,11 @@ userRouter.get("/delete", async (req, res) => {
     res.json({
       message: "Deleted succesfully!",
     });
-  }
-  catch (e) {
+  } catch (e) {
     return res.status(500).json({
-      message : "Internal server error!"
-    })
+      message: "Internal server error!",
+    });
   }
-  
 });
 
 userRouter.post("/signin", async (req, res) => {
@@ -40,44 +38,45 @@ userRouter.post("/signin", async (req, res) => {
       email,
       password,
     });
-  
+
     if (!success) {
       return res.status(403).json({
         message: "Invalid inputs!!",
-        flag : false
+        flag: false,
       });
     }
-  
+
     const response = await prisma.user.findUnique({
       where: {
         email: email,
       },
     });
-  
-  
-    if (!response) return res.json({ message : "User does not exist!"})
-  
+
+    if (!response)
+      return res.status(403).json({ message: "User does not exist!" });
+
     const isValid = await bcrypt.compare(password, response.password);
-  
-    if (!isValid) return res.json({ message : "Incorrect password!"})
-  
-    // console.log(response);
-  
-    const token = jwt.sign({ userId: response.id, email: response.email }, JWT_SECRET);
+
+    if (!isValid)
+      return res.status(403).json({ message: "Incorrect password!" });
+
+
+    const token = jwt.sign(
+      { userId: response.id, email: response.email },
+      JWT_SECRET
+    );
     return res.json({
       message: "Login Succesfull!",
       token,
     });
   } catch (e) {
     return res.status(500).json({
-      message : "Something went wrong!"
-    })
+      message: "Something went wrong!",
+    });
   }
-  
 });
 
 userRouter.post("/signup", async (req, res) => {
-
   const { name, email, password } = req.body;
 
   const signUpBody = z.object({
@@ -99,63 +98,59 @@ userRouter.post("/signup", async (req, res) => {
   }
 
   try {
+    const hashedPass = await bcrypt.hash(password, 10);
 
-    const hashedPass = await bcrypt.hash(password,10);
 
-  // console.log(hashedPass);
+    const response = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPass,
+      },
+    });
 
-  const response = await prisma.user.create({
-    data: {
-      name,
-      email,
-      password : hashedPass,
-    },
-  });
-
-  console.log(response);
-  const token = jwt.sign({ userId: response.id, email: response.email }, JWT_SECRET);
-  return res.json({
-    message: "User created Succesfully!!",
-    token
-  });
+    console.log(response);
+    const token = jwt.sign(
+      { userId: response.id, email: response.email },
+      JWT_SECRET
+    );
+    return res.json({
+      message: "User created Succesfully!!",
+      token,
+    });
   } catch (e) {
-      return res.status(405).json({
-        message : "User already exists or internal server error!"
-      })
+    return res.status(405).json({
+      message: "User already exists or internal server error!",
+    });
   }
 });
 
 userRouter.post("/blog", userMiddleware, async (req, res) => {
   try {
-
     const { userId } = req.username;
     const { title, text } = req.body;
 
-    // console.log("Extracted " + userId)
 
     const userName = await prisma.user.findUnique({
-      where : {
-        id : userId
-      }
-    })
-
-    // console.log(userName.name)
+      where: {
+        id: userId,
+      },
+    });
 
     const response = await prisma.post.create({
       data: {
         title,
         text,
-        author : userName.name,
-        authorId: userId 
+        author: userName.name,
+        authorId: userId,
       },
     });
 
-    // console.log(response.id);
 
     console.log({
-      name : userName.name,
-      id : response.id
-    })
+      name: userName.name,
+      id: response.id,
+    });
 
     return res.json({
       message: "Post created successfully!",
@@ -168,96 +163,92 @@ userRouter.post("/blog", userMiddleware, async (req, res) => {
   }
 });
 
-userRouter.get("/blog/:blogId" , userMiddleware, async (req,res)=> {
-    
-    try {
-      const { blogId } = req.params;
-      // console.log(blogId)
-      const {userId} = req.username;
+userRouter.get("/blog/:blogId", userMiddleware, async (req, res) => {
+  try {
+    const { blogId } = req.params;
+    // console.log(blogId)
+    const { userId } = req.username;
 
-      // console.log(userId)
-      
-      const userName = await prisma.user.findFirst({
-        where : {
-          id : userId
-        }
-      })
+    // console.log(userId)
 
-      if (!userName) return res.status(405).json({ message : "Not Found"})
+    const userName = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
 
-      const blog = await prisma.post.findFirst({
-          where  : {
-            Sr_no : parseInt(blogId)
-          }
-      })
+    if (!userName) return res.status(405).json({ message: "Not Found" });
 
-      // console.log(blog)
+    const blog = await prisma.post.findFirst({
+      where: {
+        Sr_no: parseInt(blogId),
+      },
+    });
 
-      return res.status(200).json({
-        blog
-      })
-      
-    } catch (e) {
-      return res.status(500).json({
-        message : "Internal server error!",
-        error : e.message
-      })
-    }
-})
+    // console.log(blog)
 
-userRouter.post("/blogs", userMiddleware, async (req,res)=> {
+    return res.status(200).json({
+      blog,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      message: "Internal server error!",
+      error: e.message,
+    });
+  }
+});
 
-    try {
-      const blogs = await prisma.post.findMany({})
+userRouter.post("/blogs", userMiddleware, async (req, res) => {
+  try {
+    const blogs = await prisma.post.findMany({});
 
-      res.status(200).json({
-        blogs
-      })
-    } catch (e) {
-      res.status(500).json({
-        message : "Internal server error!"
-      })
-    }
-})
+    res.status(200).json({
+      blogs,
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: "Internal server error!",
+    });
+  }
+});
 
-userRouter.put("/blog/:blogId",  userMiddleware, async (req,res)=> {
+userRouter.put("/blog/:blogId", userMiddleware, async (req, res) => {
+  try {
+    const { blogId } = req.params;
 
-    try {
-      const { blogId } = req.params;
+    const { title, text } = req.body;
 
-      const { title , text} = req.body;
+    const blog = await prisma.post.findFirstOrThrow({
+      where: {
+        Sr_no: parseInt(blogId),
+      },
+    });
 
-      const blog = await prisma.post.findFirstOrThrow({
-        where : {
-          Sr_no : parseInt(blogId)
-        },
-      })
+    // console.log(blog)
 
-      // console.log(blog)
+    const updatedBlog = await prisma.post.update({
+      where: {
+        id: blog.id,
+      },
+      data: {
+        title,
+        text,
+      },
+    });
 
-      const updatedBlog = await prisma.post.update({
-          where : {
-            id : blog.id
-          },
-          data : {
-            title,
-            text,
-          }
-      })
+    // console.log(updatedBlog)
 
-      // console.log(updatedBlog)
-
-      return res.json({
-        message : "Updated",
-        updatedBlog
-      })
-    } catch (e) {
-      return res.status(500).json({
-        message : "Internal server error!",
-        error : e
-      })
-    }   
-})
+    return res.json({
+      message: "Updated",
+      updatedBlog,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      message: "Internal server error!",
+      error: e,
+    });
+  }
+});
 
 module.exports = {
   userRouter,
